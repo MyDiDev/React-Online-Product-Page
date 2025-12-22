@@ -1,6 +1,9 @@
-
-export const ProductViewPage = () => {
-    return <>
-        <div></div>
+function ProductViewPage() {
+  return (
+    <>
+      <div></div>
     </>
+  );
 }
+
+export default ProductViewPage;

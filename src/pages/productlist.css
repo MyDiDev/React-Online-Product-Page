@@ -1,0 +1,30 @@
+input:focus::placeholder {
+  font-size: 12px;
+  transform: translateY(-12px);
+  transition: all ease 0.3s;
+}
+
+#products-list {
+  display: grid;
+  place-content: center;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 25px 25px;
+  grid-auto-flow: row;
+}
+
+@media (max-width: 768px) {
+    #products-list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 25px 10px;
+    }
+}
+
+@media (max-width: 450px) {
+    #products-list {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        gap: 25px 10px;
+    }
+}
