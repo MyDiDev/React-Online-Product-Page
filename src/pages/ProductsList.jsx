@@ -1,6 +1,9 @@
+import ProductCard from "../components/ProductCard"
 
 export const ProductListPage = () => {
     return <>
-        <div></div>
+        <main className="px-4 h-full">
+
+        </main>
     </>
 }
