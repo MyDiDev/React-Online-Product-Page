@@ -10,10 +10,10 @@ function ProductListPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const apiUrl = process.env.API_URL ?? "";
+        const apiUrl = import.meta.env.VITE_API_URL;
         const response = await fetch(`${apiUrl}/products`);
-        const products = response.json() ?? null;
-        setProductsData(products);
+        const products = await response.json();
+        setProductsData(products.products);
         setLoading(false);
       } catch (ex) {
         setError(ex?.message);
@@ -49,7 +49,7 @@ function ProductListPage() {
       <header className="grid place-content-center place-items-center p-4">
         <div className="max-w-2xl">
           <div className="flex flex-row items-center border-2 px-3 rounded-full">
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <i className="fa-solid fa-magnifying-glass"></i>
             <input
               type="text"
               className="px-2 outline-none rounded-full w-full h-12.5 font-medium"
@@ -64,7 +64,15 @@ function ProductListPage() {
           <section id="products">
             <h2 className="text-2xl font-bold">Listed Products</h2>
             <div id="products-list" className="mt-10">
-              <ProductCard />
+              {productsData.map((p) => {
+                return <ProductCard
+                  thumbnailSrc={p.thumbnail}
+                  title={p.title}
+                  category={p.category}
+                  description={p.description}
+                  price={p.price}
+                />;
+              })}
             </div>
           </section>
         </div>
