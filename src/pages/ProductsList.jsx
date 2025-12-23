@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import "./productlist.css";
+import { uniqBy } from "lodash";
 
 function ProductListPage() {
   const [productsData, setProductsData] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -11,9 +13,12 @@ function ProductListPage() {
     const fetchProducts = async () => {
       try {
         const apiUrl = import.meta.env.VITE_API_URL;
-        const response = await fetch(`${apiUrl}/products`);
+        const response = await fetch(`${apiUrl}/products?limit=0`);
         const products = await response.json();
         setProductsData(products.products);
+        const categories = [];
+        products.products.map((p) => categories.push(p.category));
+        setCategories(categories);
         setLoading(false);
       } catch (ex) {
         setError(ex?.message);
@@ -44,6 +49,12 @@ function ProductListPage() {
     );
   }
 
+    //   useEffect(() => {
+    //     const fetchProductsByCategory = async () => {
+
+    //     };
+    //   }, []);
+
   return (
     <>
       <header className="grid place-content-center place-items-center p-4">
@@ -63,15 +74,31 @@ function ProductListPage() {
         <div className="max-w-7xl w-full">
           <section id="products">
             <h2 className="text-2xl font-bold">Listed Products</h2>
+            <div className="flex sm:flex-row flex-col w-full gap-2 my-4 items-center">
+              <h2 className="font-medium">Filter by:</h2>
+              <div>
+                <select className="bg-gray-100/60 p-2 outline-none border-2 border-gray-500/50 font-semibold rounded-full cursor-pointer">
+                  {uniqBy(categories).map((c) => {
+                    return (
+                      <>
+                        <option value={c}>{c}</option>
+                      </>
+                    );
+                  })}
+                </select>
+              </div>
+            </div>
             <div id="products-list" className="mt-10">
               {productsData.map((p) => {
-                return <ProductCard
-                  thumbnailSrc={p.thumbnail}
-                  title={p.title}
-                  category={p.category}
-                  description={p.description}
-                  price={p.price}
-                />;
+                return (
+                  <ProductCard
+                    thumbnailSrc={p.thumbnail}
+                    title={p.title}
+                    category={p.category}
+                    description={p.description}
+                    price={p.price.toLocaleString("en-US")}
+                  />
+                );
               })}
             </div>
           </section>

@@ -10,7 +10,7 @@ function ProductCard({
 }) {
   return (
     <>
-      <div className="bg-gray-100/60 rounded-sm shadow-sm p-2 cursor-pointer">
+      <div className="bg-gray-100/60 rounded-sm shadow-sm p-2 cursor-pointer hover:-translate-y-1 transition-all">
         <div className="flex flex-col justify-between  gap-0 h-full w-full">
           <div className="w-full">
             <img src={thumbnailSrc} alt={title + "_thumbnail"} />
