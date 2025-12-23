@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Rating } from "@mui/material";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 function ProductViewPage() {
   const [loading, setLoading] = useState(true);
@@ -50,17 +52,21 @@ function ProductViewPage() {
       <main className="px-4 h-dvh grid place-content-center">
         <div className="flex sm:flex-row flex-col justify-between items-center gap-20 max-w-425 w-full">
           <div className="h-full w-60 sm:w-125">
-            {product.images.map((img) => {
-              return (
-                <>
-                  <img
-                    src={img}
-                    alt={product.title}
-                    className="w-full h-full"
-                  />
-                </>
-              );
-            })}
+            <Swiper autoplay={true} zoom={true}>
+              {product.images.map((img) => {
+                return (
+                  <>
+                    <SwiperSlide>
+                      <img
+                        src={img}
+                        alt={product.title}
+                        className="w-full h-full"
+                      />
+                    </SwiperSlide>
+                  </>
+                );
+              })}
+            </Swiper>
           </div>
           <div className="flex flex-col justify-between h-full">
             <div className="max-w-125 space-y-2">
