@@ -1,4 +1,5 @@
 import "./ProductCard.css";
+import { useNavigate } from "react-router-dom";
 
 function ProductCard({
   id = -1,
@@ -9,11 +10,14 @@ function ProductCard({
   rating = 0,
   thumbnailSrc = "",
 }) {
-  const previewPage = (id) => {};
+  const navigate = useNavigate();
 
   return (
     <>
-      <div className="bg-gray-100/60 rounded-sm shadow-sm p-2 cursor-pointer hover:-translate-y-1 transition-all">
+      <div
+        className="bg-gray-100/60 rounded-sm shadow-sm p-2 cursor-pointer hover:-translate-y-1 transition-all"
+        onClick={() => navigate(`/product/${id}`)}
+      >
         <div className="flex flex-col justify-between  gap-0 h-full w-full">
           <div className="w-full">
             <img src={thumbnailSrc} alt={title + "_thumbnail"} />
