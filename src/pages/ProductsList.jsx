@@ -6,6 +6,7 @@ import { uniqBy } from "lodash";
 function ProductListPage() {
   const [productsData, setProductsData] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [productQuery, setProductQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -27,11 +28,27 @@ function ProductListPage() {
 
   const fetchProductsByCategory = async (category) => {
     try {
+      setProductQuery("");
       const response = await fetch(
         `${apiUrl}/products/category/${category}?limit=0`
       );
       const categoryProducts = await response.json();
-      setProductsData(categoryProducts.products);
+      setProductsData(categoryProducts?.products);
+    } catch (ex) {
+      setError(ex?.message);
+    }
+  };
+
+  const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
+
+  const searchProducts = async () => {
+    try {
+      await sleep(1000);
+      const response = await fetch(
+        `${apiUrl}/products/search?q=${productQuery}&limit=0`
+      );
+      const products = await response.json();
+      setProductsData(products?.products);
     } catch (ex) {
       setError(ex?.message);
     }
@@ -69,6 +86,11 @@ function ProductListPage() {
             <i className="fa-solid fa-magnifying-glass"></i>
             <input
               type="text"
+              value={productQuery}
+              onChange={(e) => {
+                setProductQuery(e?.target?.value);
+                searchProducts();
+              }}
               className="px-2 outline-none rounded-full w-full h-12.5 font-medium"
               placeholder="Search for a product..."
             />
@@ -111,6 +133,7 @@ function ProductListPage() {
               {productsData.map((p) => {
                 return (
                   <ProductCard
+                    id={p.id}
                     thumbnailSrc={p.thumbnail}
                     title={p.title}
                     category={p.category}

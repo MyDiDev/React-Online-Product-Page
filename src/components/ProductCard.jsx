@@ -1,6 +1,7 @@
 import "./ProductCard.css";
 
 function ProductCard({
+  id = -1,
   title = "",
   description = "",
   category = "",
@@ -8,6 +9,8 @@ function ProductCard({
   rating = 0,
   thumbnailSrc = "",
 }) {
+  const previewPage = (id) => {};
+
   return (
     <>
       <div className="bg-gray-100/60 rounded-sm shadow-sm p-2 cursor-pointer hover:-translate-y-1 transition-all">
