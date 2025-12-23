@@ -27,7 +27,7 @@ function ProductListPage() {
   if (loading) {
     return (
       <>
-        <div className="flex justify-center items-center h-full">
+        <div className="flex justify-center items-center h-dvh">
           <p>Loading products...</p>
         </div>
       </>
@@ -37,7 +37,7 @@ function ProductListPage() {
   if (error) {
     return (
       <>
-        <div className="flex justify-center items-center h-full">
+        <div className="flex justify-center items-center h-dvh">
           <p>Oops... Error ocurred: {error}</p>
         </div>
       </>
@@ -59,7 +59,7 @@ function ProductListPage() {
         </div>
       </header>
 
-      <main className="px-4 mt-5 h-full flex justify-center">
+      <main className="px-4 pb-5 mt-5 h-full flex justify-center">
         <div className="max-w-7xl w-full">
           <section id="products">
             <h2 className="text-2xl font-bold">Listed Products</h2>
