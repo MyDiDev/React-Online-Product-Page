@@ -8,24 +8,36 @@ function ProductListPage() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/products?limit=0`);
+      const products = await response.json();
+      setProductsData(products.products);
+      const categories = [];
+      products.products.map((p) => categories.push(p.category));
+      setCategories(categories);
+      setLoading(false);
+    } catch (ex) {
+      setError(ex?.message);
+      setLoading(false);
+    }
+  };
+
+  const fetchProductsByCategory = async (category) => {
+    try {
+      const response = await fetch(
+        `${apiUrl}/products/category/${category}?limit=0`
+      );
+      const categoryProducts = await response.json();
+      setProductsData(categoryProducts.products);
+    } catch (ex) {
+      setError(ex?.message);
+    }
+  };
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const apiUrl = import.meta.env.VITE_API_URL;
-        const response = await fetch(`${apiUrl}/products?limit=0`);
-        const products = await response.json();
-        setProductsData(products.products);
-        const categories = [];
-        products.products.map((p) => categories.push(p.category));
-        setCategories(categories);
-        setLoading(false);
-      } catch (ex) {
-        setError(ex?.message);
-        setLoading(false);
-      }
-    };
-
     fetchProducts();
   }, []);
 
@@ -49,12 +61,6 @@ function ProductListPage() {
     );
   }
 
-    //   useEffect(() => {
-    //     const fetchProductsByCategory = async () => {
-
-    //     };
-    //   }, []);
-
   return (
     <>
       <header className="grid place-content-center place-items-center p-4">
@@ -77,7 +83,12 @@ function ProductListPage() {
             <div className="flex sm:flex-row flex-col w-full gap-2 my-4 items-center">
               <h2 className="font-medium">Filter by:</h2>
               <div>
-                <select className="bg-gray-100/60 p-2 outline-none border-2 border-gray-500/50 font-semibold rounded-full cursor-pointer">
+                <select
+                  onChange={(e) => {
+                    fetchProductsByCategory(e?.target?.value);
+                  }}
+                  className="bg-gray-100/60 p-2 outline-none border-2 border-gray-500/50 rounded-full cursor-pointer"
+                >
                   {uniqBy(categories).map((c) => {
                     return (
                       <>
@@ -86,6 +97,14 @@ function ProductListPage() {
                     );
                   })}
                 </select>
+              </div>
+              <div>
+                <button
+                  onClick={() => fetchProducts()}
+                  className="bg-gray-100/70 rounded-full p-2 px-4 border border-gray-500/50 font-medium cursor-pointer hover:bg-blue-700 hover:text-white transition-all active:bg-blue-900"
+                >
+                  Clear filter
+                </button>
               </div>
             </div>
             <div id="products-list" className="mt-10">
