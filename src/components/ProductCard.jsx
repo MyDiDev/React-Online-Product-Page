@@ -1,7 +1,7 @@
 import "./ProductCard.css";
 import { useNavigate } from "react-router-dom";
 
-function ProductCard({
+const ProductCard = ({
   id = -1,
   title = "",
   description = "",
@@ -9,7 +9,7 @@ function ProductCard({
   price = "unavaible",
   rating = 0,
   thumbnailSrc = "",
-}) {
+}) => {
   const navigate = useNavigate();
 
   return (

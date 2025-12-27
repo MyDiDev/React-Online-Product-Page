@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Rating } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { Rating } from "@mui/material";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 function ProductViewPage() {
   const [loading, setLoading] = useState(true);
@@ -10,6 +11,7 @@ function ProductViewPage() {
   const [product, setProduct] = useState(null);
   const apiUrl = import.meta.env.VITE_API_URL;
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -49,7 +51,16 @@ function ProductViewPage() {
 
   return (
     <>
-      <main className="px-4 h-dvh grid place-content-center">
+      <header className="px-5 py-7 my-2">
+        <nav className="flex justify-between items-center p-2">
+          <div id="logo"></div>
+          <div className="cursor-pointer" onClick={navigate(`/cart?id=${id}`)}>
+            <i className="fa-solid fa-cart-shopping"></i>
+          </div>
+        </nav>
+      </header>
+
+      <main className="px-4 h-full grid place-content-center place-items-center gap-y-[100px]">
         <div className="flex sm:flex-row flex-col justify-between items-center gap-20 max-w-425 w-full">
           <div className="h-full w-60 sm:w-125">
             <Swiper autoplay={true} zoom={true}>
@@ -77,12 +88,13 @@ function ProductViewPage() {
                   defaultValue={product.rating}
                   precision={0.5}
                   readOnly={true}
+                  emptyIcon={<StarBorderIcon style={{ color: "gray" }} />}
                 />
                 <p
                   className={
                     product.availabilityStatus != "In Stock"
                       ? "p-1 px-4 bg-red-600 text-white cursor-pointer rounded-full shadow-sm my-2 border border-red-600"
-                      : "p-1 px-4 bg-green-500 text-white cursor-pointer rounded-full shadow-sm my-2 border border-green-700"
+                      : "p-1 px-4 bg-green-800 text-white cursor-pointer rounded-full shadow-sm my-2 border border-green-700"
                   }
                 >
                   {product.availabilityStatus}
@@ -92,31 +104,40 @@ function ProductViewPage() {
               <div className="flex flex-row gap-2">
                 {product.tags.map((tag) => {
                   return (
-                    <p className="p-1 px-4 bg-black text-white cursor-pointer rounded-full shadow-sm my-2 border border-gray-800">
+                    <p className="p-1 px-4 bg-white text-black cursor-pointer rounded-full shadow-sm my-2 border border-gray-800">
                       {tag}
                     </p>
                   );
                 })}
               </div>
               <div className="space-y-2 mb-3">
-                <p className="text-sm text-gray-600">{product.description}</p>
+                <p className="text-sm text-gray-300">{product.description}</p>
               </div>
-              <h4 className="text-lg font-semibold">Product information:</h4>
-              <div className="space-y-2">
+              <h4 className="text-lg font-semibold">Product Information:</h4>
+              <div className="space-y-2 ml-1 mb-5">
                 <p className="text-sm">
-                  <strong>Brand</strong>: {product.brand}
+                  <strong className="text-gray-200">Brand</strong>:{" "}
+                  {product.brand}.
                 </p>
                 <p className="text-sm">
-                  <strong>Weight</strong>: {product.weight}g
+                  <strong className="text-gray-200">Weight</strong>:{" "}
+                  {product.weight} grams.
                 </p>
                 <p className="text-sm">
-                  <strong>Warranty</strong>: {product.warrantyInformation}
+                  <strong className="text-gray-200">Warranty</strong>:{" "}
+                  {product.warrantyInformation}.
                 </p>
                 <p className="text-sm">
-                  <strong>Shipping</strong>: {product.shippingInformation}
+                  <strong className="text-gray-200">Shipping</strong>:{" "}
+                  {product.shippingInformation}.
                 </p>
                 <p className="text-sm">
-                  <strong>Stock available:</strong> {product.stock}
+                  <strong className="text-gray-200">Stock available:</strong>{" "}
+                  {product.stock} items.
+                </p>
+                <p className="text-sm">
+                  <strong className="text-gray-200">Return policy:</strong>{" "}
+                  {product.returnPolicy}.
                 </p>
               </div>
             </div>
@@ -126,11 +147,16 @@ function ProductViewPage() {
                 <h4 className="font-semibold text-2xl">${product.price}</h4>
               </div>
               <div className="w-full sm:w-50">
-                <button className="bg-blue-800 rounded-sm cursor-pointer text-white text-sm font-medium p-2 w-full">
+                <button className="bg-white rounded-sm cursor-pointer text-black text-sm font-medium p-2 w-full">
                   Add to cart
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="h-full w-full">
+          <div className="max-w-425">
+            <h2 className="text-2xl font-bold">Reviews</h2>
           </div>
         </div>
       </main>

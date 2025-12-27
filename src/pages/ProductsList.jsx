@@ -3,7 +3,7 @@ import ProductCard from "../components/ProductCard";
 import "./productlist.css";
 import { uniqBy } from "lodash";
 
-function ProductListPage() {
+const ProductListPage = () => {
   const [productsData, setProductsData] = useState([]);
   const [categories, setCategories] = useState([]);
   const [productQuery, setProductQuery] = useState("");
