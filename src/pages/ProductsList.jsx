@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import "./productlist.css";
 import { uniqBy } from "lodash";
+import "./productlist.css";
 
 const ProductListPage = () => {
   const [productsData, setProductsData] = useState([]);
@@ -80,28 +80,36 @@ const ProductListPage = () => {
 
   return (
     <>
-      <header className="grid place-content-center place-items-center p-4">
-        <div className="max-w-2xl">
-          <div className="flex flex-row items-center border-2 px-3 rounded-full">
-            <i className="fa-solid fa-magnifying-glass"></i>
+      <header className="flex justify-between items-center p-4">
+        <div id="logo"></div>
+        <div className="max-w-175 w-full">
+          <div className="flex flex-row items-center border-2 border-gray-700 bg-black/80 px-4 rounded-full w-full">
+            <i
+              className="fa-solid fa-magnifying-glass"
+              style={{ color: "gray" }}
+            ></i>
             <input
+              id="searchProductInput"
               type="text"
               value={productQuery}
               onChange={(e) => {
                 setProductQuery(e?.target?.value);
                 searchProducts();
               }}
-              className="px-2 outline-none rounded-full w-full h-12.5 font-medium"
+              className="px-2 outline-none rounded-full h-12.5 font-medium w-full"
               placeholder="Search for a product..."
             />
           </div>
         </div>
+        <div id="cart-div"></div>
       </header>
 
       <main className="px-4 pb-5 mt-5 h-full flex justify-center">
-        <div className="max-w-7xl w-full">
+        <div className="max-w-500 w-full">
           <section id="products">
-            <h2 className="text-2xl font-bold">Listed Products</h2>
+            <h2 className="text-6xl font-bold sm:text-start text-center">
+              Listed Products
+            </h2>
             <div className="flex sm:flex-row flex-col w-full gap-2 my-4 items-center">
               <h2 className="font-medium">Filter by:</h2>
               <div>
@@ -109,7 +117,7 @@ const ProductListPage = () => {
                   onChange={(e) => {
                     fetchProductsByCategory(e?.target?.value);
                   }}
-                  className="bg-gray-100/60 p-2 outline-none border-2 border-gray-500/50 rounded-full cursor-pointer"
+                  className="bg-black p-2 outline-none border-2 border-gray-500/50 rounded-full cursor-pointer"
                 >
                   {uniqBy(categories).map((c) => {
                     return (
@@ -123,7 +131,7 @@ const ProductListPage = () => {
               <div>
                 <button
                   onClick={() => fetchProducts()}
-                  className="bg-gray-100/70 rounded-full p-2 px-4 border border-gray-500/50 font-medium cursor-pointer hover:bg-blue-700 hover:text-white transition-all active:bg-blue-900"
+                  className="bg-white text-black rounded-full p-2 px-4 font-medium cursor-pointer hover:bg-white/95 transition-all active:bg-white/80"
                 >
                   Clear filter
                 </button>
@@ -148,6 +156,6 @@ const ProductListPage = () => {
       </main>
     </>
   );
-}
+};
 
 export default ProductListPage;

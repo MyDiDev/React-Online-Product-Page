@@ -1,5 +1,5 @@
-import "./ProductCard.css";
 import { useNavigate } from "react-router-dom";
+import "./ProductCard.css";
 
 const ProductCard = ({
   id = -1,
@@ -15,7 +15,7 @@ const ProductCard = ({
   return (
     <>
       <div
-        className="bg-gray-100/60 rounded-sm shadow-sm p-2 cursor-pointer hover:-translate-y-1 transition-all"
+        className="bg-black/90 backdrop-blur-lg border-2 px-4 border-gray-600 rounded-sm shadow-sm p-2 cursor-pointer hover:-translate-y-1 transition-all"
         onClick={() => navigate(`/product/${id}`)}
       >
         <div className="flex flex-col justify-between  gap-0 h-full w-full">
@@ -31,10 +31,7 @@ const ProductCard = ({
                 </div>
               </div>
               <div>
-                <p
-                  id="product_description_preview"
-                  className="text-gray-500 font-light text-[12px] sm:text-sm"
-                >
+                <p id="description-preview" className="text-gray-500 font-light text-[12px] sm:text-sm">
                   {description}
                 </p>
               </div>
@@ -45,7 +42,7 @@ const ProductCard = ({
                 <h4 className="font-semibold text-xl">${price}</h4>
               </div>
               <div className="w-full sm:w-auto">
-                <button className="bg-blue-800 rounded-sm cursor-pointer text-white text-sm font-medium p-2 w-full">
+                <button className="bg-white rounded-sm cursor-pointer text-black text-sm font-medium p-2 w-full">
                   Add to cart
                 </button>
               </div>
@@ -55,6 +52,6 @@ const ProductCard = ({
       </div>
     </>
   );
-}
+};
 
 export default ProductCard;

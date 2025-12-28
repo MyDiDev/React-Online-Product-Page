@@ -54,13 +54,13 @@ function ProductViewPage() {
       <header className="px-5 py-7 my-2">
         <nav className="flex justify-between items-center p-2">
           <div id="logo"></div>
-          <div className="cursor-pointer" onClick={navigate(`/cart?id=${id}`)}>
+          <div className="cursor-pointer" onClick={() => navigate(`/cart?id=${id}`)}>
             <i className="fa-solid fa-cart-shopping"></i>
           </div>
         </nav>
       </header>
 
-      <main className="px-4 h-full grid place-content-center place-items-center gap-y-[100px]">
+      <main className="px-4 h-full grid place-content-center place-items-center gap-y-25">
         <div className="flex sm:flex-row flex-col justify-between items-center gap-20 max-w-425 w-full">
           <div className="h-full w-60 sm:w-125">
             <Swiper autoplay={true} zoom={true}>

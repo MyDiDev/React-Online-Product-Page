@@ -1,3 +1,13 @@
+body {
+  background-color: black;
+}
+
+
+input::placeholder {
+  text-align: center;
+  font-size: 20px;
+}
+
 input:focus::placeholder {
   font-size: 12px;
   transform: translateY(-12px);
@@ -7,24 +17,32 @@ input:focus::placeholder {
 #products-list {
   display: grid;
   place-content: center;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   gap: 25px 25px;
   grid-auto-flow: row;
 }
 
-@media (max-width: 768px) {
-    #products-list {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        gap: 25px 10px;
-    }
+@media (max-width: 1540px) {
+  #products-list {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 25px 10px;
+  }
+}
+
+@media (max-width: 950px) {
+  #products-list {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 25px 10px;
+  }
 }
 
 @media (max-width: 450px) {
-    #products-list {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr;
-        gap: 25px 10px;
-    }
+  #products-list {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 25px 10px;
+  }
 }
