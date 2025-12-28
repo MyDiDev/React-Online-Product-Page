@@ -4,7 +4,12 @@ html {
 }
 
 body {
-  background: #000;
+  background-color: rgb(15, 15, 15);
+}
+
+#root {
+  margin: 0;
+  height: 100%;
 }
 
 * {

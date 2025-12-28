@@ -43,7 +43,9 @@ const ProductListPage = () => {
 
   const searchProducts = async () => {
     try {
-      await sleep(1000);
+      if (!productQuery) await sleep(400);
+      else await sleep(800);
+
       const response = await fetch(
         `${apiUrl}/products/search?q=${productQuery}&limit=0`
       );
@@ -80,10 +82,10 @@ const ProductListPage = () => {
 
   return (
     <>
-      <header className="flex justify-between items-center p-4">
+      <header className="flex justify-between items-center p-4 sticky top-0 z-10">
         <div id="logo"></div>
         <div className="max-w-175 w-full">
-          <div className="flex flex-row items-center border-2 border-gray-700 bg-black/80 px-4 rounded-full w-full">
+          <div className="flex flex-row items-center border-2 border-gray-700 bg-black/80 backdrop-blur-lg px-4 rounded-full w-full">
             <i
               className="fa-solid fa-magnifying-glass"
               style={{ color: "gray" }}
@@ -101,10 +103,12 @@ const ProductListPage = () => {
             />
           </div>
         </div>
-        <div id="cart-div"></div>
+        <div className="flex items-center justify-center border-2 border-gray-700 bg-black/80 p-3 rounded-full cursor-pointer">
+          <i className="fa-solid fa-cart-shopping text-lg text-gray-300"></i>
+        </div>
       </header>
 
-      <main className="px-4 pb-5 mt-5 h-full flex justify-center">
+      <main className="px-4 pb-5 mt-5 h-full w-full flex justify-center">
         <div className="max-w-500 w-full">
           <section id="products">
             <h2 className="text-6xl font-bold sm:text-start text-center">
