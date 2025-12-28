@@ -145,12 +145,14 @@ const ProductListPage = () => {
               {productsData.map((p) => {
                 return (
                   <ProductCard
-                    id={p.id}
-                    thumbnailSrc={p.thumbnail}
-                    title={p.title}
-                    category={p.category}
-                    description={p.description}
-                    price={p.price.toLocaleString("en-US")}
+                    id={p?.id}
+                    thumbnailSrc={p?.thumbnail}
+                    title={p?.title}
+                    category={p?.category}
+                    description={p?.description}
+                    price={p?.price?.toLocaleString("en-US")}
+                    rating={p?.rating}
+                    reviewsCount={p?.reviews.length}
                   />
                 );
               })}

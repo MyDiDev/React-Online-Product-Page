@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./ProductCard.css";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import { Rating } from "@mui/material";
 
 const ProductCard = ({
   id = -1,
@@ -10,6 +12,7 @@ const ProductCard = ({
   discountRate = null,
   rating = 0,
   thumbnailSrc = "",
+  reviewsCount = 0,
 }) => {
   const navigate = useNavigate();
 
@@ -22,7 +25,12 @@ const ProductCard = ({
       >
         <div className="flex flex-col justify-between  gap-0 h-full w-full">
           <div className="w-full flex">
-            <img src={thumbnailSrc} alt={title + "_thumbnail"} className="relative" style={{margin: '0 auto'}} />
+            <img
+              src={thumbnailSrc}
+              alt={title + "_thumbnail"}
+              className="relative"
+              style={{ margin: "0 auto" }}
+            />
             <div className="flex flex-col gap-2 mt-3 absolute bg-gray-800/90 p-3 rounded-full">
               <i style={{ color: "gray" }} className="fa-regular fa-heart"></i>
             </div>
@@ -38,8 +46,17 @@ const ProductCard = ({
                   {description}
                 </p>
               </div>
-              <div>
-
+              <div className="flex flex-row gap-2">
+                <Rating
+                  defaultValue={rating}
+                  precision={0.5}
+                  readOnly={true}
+                  emptyIcon={<StarBorderIcon style={{ color: "gray" }} />}
+                />
+                <div>
+                  <i className="fa-regular fa-message mr-2"></i>
+                  <span>{reviewsCount}</span>
+                </div>
               </div>
             </div>
             <div className="flex sm:flex-row justify-between sm:items-center mt-5 flex-col gap-3 pb-3">
