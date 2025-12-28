@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import { Rating } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -63,11 +64,18 @@ function ProductViewPage() {
         </nav>
       </header>
 
-      <main className="px-4 flex justify-center items-center flex-col gap-y-25">
-        <div style={{height: "100dvh"}}>
+      <main className="px-4 flex justify-center items-center flex-col h-full pb-10">
+        <div className="px-4 flex justify-center items-center flex-col gap-y-25">
           <div className="flex sm:flex-row flex-col justify-between items-center gap-20 max-w-425 w-full">
-            <div className="h-full w-60 sm:w-125">
-              <Swiper autoplay={true} zoom={true}>
+            <div className="w-60 sm:w-125">
+              <Swiper
+                modules={[Autoplay, Pagination, Navigation]}
+                autoplay={{
+                  delay: 3500,
+                  disableOnInteraction: false,
+                }}
+                zoom={true}
+              >
                 {product.images.map((img) => {
                   return (
                     <>
@@ -83,9 +91,11 @@ function ProductViewPage() {
                 })}
               </Swiper>
             </div>
-            <div className="flex flex-col justify-between h-full">
+            <div className="flex flex-col justify-between border-2 border-gray-700 p-5 rounded-sm w-full sm:w-auto">
               <div className="max-w-125 space-y-2">
-                <h2 className="text-2xl font-bold">{product.title} </h2>
+                <h2 className="text-3xl sm:text-5xl font-bold">
+                  {product.title}{" "}
+                </h2>
 
                 <div className="flex flex-row gap-2 items-center">
                   <Rating
@@ -115,7 +125,9 @@ function ProductViewPage() {
                   })}
                 </div>
                 <div className="space-y-2 mb-3">
-                  <p className="text-sm text-gray-300">{product.description}</p>
+                  <p className="text-base text-gray-300">
+                    {product.description}
+                  </p>
                 </div>
                 <h4 className="text-lg font-semibold">Product Information:</h4>
                 <div className="space-y-2 ml-1 mb-5">
@@ -152,15 +164,60 @@ function ProductViewPage() {
                 </div>
                 <div className="w-full sm:w-50">
                   <button className="bg-white rounded-sm cursor-pointer text-black text-sm font-medium p-2 w-full">
-                    Add to cart
+                    <span className="mr-3">Add to cart</span>
+                    <i className="fa-solid fa-cart-shopping text-lg"></i>
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <div className="h-full w-full">
-            <div className="max-w-425">
-              <h2 className="text-2xl font-bold">Reviews</h2>
+          <h2 className="text-3xl font-bold">Reviews of this product</h2>
+          <div className="w-full">
+            <div className="w-full max-w-425">
+              <div className="flex flex-col gap-5 mt-5">
+                {product.reviews.map((r) => {
+                  return (
+                    <>
+                      <div className="w-full p-5 rounded-sm border-2 border-gray-700">
+                        <div className="flex flex-col gap-2">
+                          <div className="flex flex-row gap-2 items-center">
+                            <h4 className="text-2xl font-bold">
+                              {r?.reviewerName}
+                            </h4>
+                            -
+                            <span className="text-gray-400 font-medium">
+                              <a href={`mailto:${r?.reviewerEmail}`}>
+                                {r?.reviewerEmail}
+                              </a>
+                            </span>
+                          </div>
+                          <div className="flex flex-row gap-2">
+                            <Rating
+                              defaultValue={r?.rating}
+                              precision={0.5}
+                              emptyIcon={
+                                <StarBorderIcon style={{ color: "gray" }} />
+                              }
+                              readOnly={true}
+                            />
+                            <p>
+                              {new Date(r?.date).toLocaleDateString("en-US")}
+                            </p>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <p className="text-gray-200 font-medium text-xl">
+                              {r?.comment}
+                            </p>
+                            <div className="flex gap-2 mt-3 bg-gray-800 p-3 rounded-full cursor-pointer text-gray-600 hover:text-red-600 hover:-translate-y-0.5 transition-all">
+                              <i className="fa-regular fa-heart"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

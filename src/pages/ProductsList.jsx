@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import Button from "../components/Button";
 import { uniqBy } from "lodash";
 import "./productlist.css";
 
 const ProductListPage = () => {
+  const [preloadProducts, setPreloadProducts] = useState([]);
   const [productsData, setProductsData] = useState([]);
   const [categories, setCategories] = useState([]);
   const [productQuery, setProductQuery] = useState("");
@@ -13,12 +15,21 @@ const ProductListPage = () => {
 
   const fetchProducts = async () => {
     try {
+      if (productQuery != "") setProductQuery("");
+      if (preloadProducts.length != 0) {
+        setProductsData(preloadProducts);
+        setLoading(false);
+        return;
+      }
       const response = await fetch(`${apiUrl}/products?limit=0`);
       const products = await response.json();
-      setProductsData(products.products);
       const categories = [];
       products.products.map((p) => categories.push(p.category));
+
+      setProductsData(products.products);
+      setPreloadProducts(products.products);
       setCategories(categories);
+
       setLoading(false);
     } catch (ex) {
       setError(ex?.message);
@@ -133,12 +144,7 @@ const ProductListPage = () => {
                 </select>
               </div>
               <div>
-                <button
-                  onClick={() => fetchProducts()}
-                  className="bg-white text-black rounded-full p-2 px-4 font-medium cursor-pointer hover:bg-white/95 transition-all active:bg-white/80"
-                >
-                  Clear filter
-                </button>
+                <Button onclick={() => fetchProducts()}>Clear filter</Button>
               </div>
             </div>
             <div id="products-list" className="mt-10">
