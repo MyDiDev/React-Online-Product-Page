@@ -7,10 +7,10 @@ import { Rating } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 function ProductViewPage() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [product, setProduct] = useState(null);
-  const apiUrl = import.meta.env.VITE_API_URL;
   const { id } = useParams();
   const navigate = useNavigate();
 

@@ -16,7 +16,9 @@ const ProductListPage = () => {
   const fetchProducts = async () => {
     try {
       if (productQuery != "") setProductQuery("");
-      if (preloadProducts.length != 0) {
+      setPreloadProducts(localStorage.getItem("products"));
+
+      if (preloadProducts?.length > 0) {
         setProductsData(preloadProducts);
         setLoading(false);
         return;
@@ -29,6 +31,7 @@ const ProductListPage = () => {
       setProductsData(products.products);
       setPreloadProducts(products.products);
       setCategories(categories);
+      localStorage.setItem("products", productsData);
 
       setLoading(false);
     } catch (ex) {
@@ -41,7 +44,7 @@ const ProductListPage = () => {
     try {
       setProductQuery("");
       const response = await fetch(
-        `${apiUrl}/products/category/${category}?limit=0`
+        `${apiUrl}/products/category/${category}?limit=0`,
       );
       const categoryProducts = await response.json();
       setProductsData(categoryProducts?.products);
@@ -56,12 +59,13 @@ const ProductListPage = () => {
     try {
       if (!productQuery) await sleep(400);
       else await sleep(800);
-
+      
       const response = await fetch(
-        `${apiUrl}/products/search?q=${productQuery}&limit=0`
+        `${apiUrl}/products/search?q=${productQuery}&limit=0`,
       );
       const products = await response.json();
-      setProductsData(products?.products);
+
+      setProductsData(products.products);
     } catch (ex) {
       setError(ex?.message);
     }
@@ -114,9 +118,11 @@ const ProductListPage = () => {
             />
           </div>
         </div>
-        <div className="flex items-center justify-center border-2 border-gray-700 bg-black/80 p-3 rounded-full cursor-pointer">
-          <i className="fa-solid fa-cart-shopping text-lg text-gray-300"></i>
-        </div>
+        <a href="/cart">
+          <div className="flex items-center justify-center border-2 border-gray-700 bg-black/80 p-3 rounded-full cursor-pointer">
+            <i className="fa-solid fa-cart-shopping text-lg text-gray-300"></i>
+          </div>
+        </a>
       </header>
 
       <main className="px-4 pb-5 mt-5 h-full w-full flex justify-center">
