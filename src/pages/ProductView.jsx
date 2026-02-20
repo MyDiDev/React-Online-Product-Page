@@ -57,7 +57,7 @@ function ProductViewPage() {
           <div id="logo"></div>
           <div
             className="cursor-pointer"
-            onClick={() => navigate(`/cart?id=${id}`)}
+            onClick={() => navigate(`/cart`)}
           >
             <i className="fa-solid fa-cart-shopping"></i>
           </div>

@@ -12,27 +12,28 @@ const ProductListPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const apiUrl = import.meta.env.VITE_API_URL;
-
+  
   const fetchProducts = async () => {
     try {
       if (productQuery != "") setProductQuery("");
-      setPreloadProducts(localStorage.getItem("products"));
 
+      setPreloadProducts(localStorage.getItem("products"));
       if (preloadProducts?.length > 0) {
         setProductsData(preloadProducts);
         setLoading(false);
         return;
       }
+
       const response = await fetch(`${apiUrl}/products?limit=0`);
       const products = await response.json();
       const categories = [];
       products.products.map((p) => categories.push(p.category));
 
+      localStorage.setItem("products", products.products);
       setProductsData(products.products);
       setPreloadProducts(products.products);
       setCategories(categories);
-      localStorage.setItem("products", productsData);
-
+      
       setLoading(false);
     } catch (ex) {
       setError(ex?.message);
@@ -54,7 +55,6 @@ const ProductListPage = () => {
   };
 
   const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
-
   const searchProducts = async () => {
     try {
       if (!productQuery) await sleep(400);
