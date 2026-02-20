@@ -3,9 +3,9 @@ import CardProduct from "../components/CartProduct";
 import { useNavigate } from "react-router-dom";
 
 const CartViewPage = () => {
-  const productsInCart = localStorage.getItem("cart_products", []);
+  const productsInCart = JSON.parse(localStorage.getItem("cart_products"));
   const navigate = useNavigate();
-  
+
   if (!productsInCart) {
     return (
       <>
@@ -42,9 +42,10 @@ const CartViewPage = () => {
               </p>
             </div>
             <div>
-              {productsInCart.map((p) => {
-                return <></>;
-              })}
+              {productsInCart.length != 0 &&
+                productsInCart.map((p) => {
+                  return <CardProduct />;
+                })}
             </div>
             <div></div>
           </div>

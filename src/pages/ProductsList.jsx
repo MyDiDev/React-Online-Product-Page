@@ -5,8 +5,8 @@ import { uniqBy } from "lodash";
 import "./productlist.css";
 
 const ProductListPage = () => {
-  const [preloadProducts, setPreloadProducts] = useState([]);
   const [productsData, setProductsData] = useState([]);
+  const [preloadProducts, setPreloadProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [productQuery, setProductQuery] = useState("");
   const [loading, setLoading] = useState(true);

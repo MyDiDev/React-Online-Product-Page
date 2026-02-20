@@ -5,6 +5,9 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import { Rating } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import { addToCart } from "../services/cart";
+import toast, { Toaster } from "react-hot-toast";
+import Button from "../components/Button";
 
 function ProductViewPage() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -30,11 +33,22 @@ function ProductViewPage() {
     fetchProduct();
   }, []);
 
+  const addProductIntoCart = () => {
+    
+    if (product === null) {
+      toast.error("Couldn't add product to the cart :(");
+      return;
+    }
+
+    if (addToCart(product)) toast.success("Product added to cart successfully");
+    else toast.error("Couldn't add product to the cart, try again");
+  };
+
   if (loading) {
     return (
       <>
         <div className="flex justify-center items-center h-dvh">
-          <p>Loading products...</p>
+          <p>Loading product...</p>
         </div>
       </>
     );
@@ -52,13 +66,12 @@ function ProductViewPage() {
 
   return (
     <>
+      <Toaster position="bottom-right" />
+
       <header className="px-5 py-7 my-2">
         <nav className="flex justify-between items-center p-2">
           <div id="logo"></div>
-          <div
-            className="cursor-pointer"
-            onClick={() => navigate(`/cart`)}
-          >
+          <div className="cursor-pointer" onClick={() => navigate(`/cart`)}>
             <i className="fa-solid fa-cart-shopping"></i>
           </div>
         </nav>
@@ -163,10 +176,13 @@ function ProductViewPage() {
                   <h4 className="font-semibold text-2xl">${product.price}</h4>
                 </div>
                 <div className="w-full sm:w-50">
-                  <button className="bg-white rounded-sm cursor-pointer text-black text-sm font-medium p-2 w-full">
+                  <Button
+                    styles={{ width: "100%" }}
+                    onclick={addProductIntoCart}
+                  >
                     <span className="mr-3">Add to cart</span>
                     <i className="fa-solid fa-cart-shopping text-lg"></i>
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
