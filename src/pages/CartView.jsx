@@ -31,20 +31,30 @@ const CartViewPage = () => {
 
   return (
     <>
-      <main className="flex justify-center items-center flex-col h-full pb-10">
-        <section className="bg-black/80 backdrop-blur-lg border-2 border-gray-500 p-4">
+      <main className="flex justify-center items-center flex-col h-full my-5 px-4 pb-10">
+        <section className="bg-black/80 backdrop-blur-lg border-2 border-gray-500 max-w-300 p-4 rounded w-full h-full min-h-dvh">
           <div className="flex flex-col gap-5 justify-start">
             <div>
-              <h2 className="text-3xl font-bold">Cart</h2>
-              <hr />
-              <p className="text-sm text-gray-700">
+              <h2 className="text-7xl font-bold">Cart</h2>
+              <p className="text-lg my-2 text-gray-400">
                 Products added in the cart.
               </p>
             </div>
             <div>
-              {productsInCart.length != 0 &&
+              {productsInCart.length > 0 &&
                 productsInCart.map((p) => {
-                  return <CardProduct />;
+                  return (
+                    <CardProduct
+                      id={p?.id}
+                      thumbnailSrc={p?.thumbnail}
+                      title={p?.title}
+                      category={p?.category}
+                      description={p?.description}
+                      price={p?.price?.toLocaleString("en-US")}
+                      rating={p?.rating}
+                      reviewsCount={p?.reviews.length}
+                    />
+                  );
                 })}
             </div>
             <div></div>
