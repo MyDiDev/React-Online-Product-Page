@@ -32,7 +32,7 @@ const CartViewPage = () => {
   return (
     <>
       <main className="flex justify-center items-center flex-col h-full my-5 px-4 pb-10">
-        <section className="bg-black/80 backdrop-blur-lg border-2 border-gray-500 max-w-300 p-4 rounded w-full h-full min-h-dvh">
+        <section className="bg-black/80 backdrop-blur-lg max-w-300 p-4 rounded w-full h-full min-h-dvh">
           <div className="flex flex-col gap-5 justify-start">
             <div>
               <h2 className="text-7xl font-bold">Cart</h2>
@@ -40,7 +40,7 @@ const CartViewPage = () => {
                 Products added in the cart.
               </p>
             </div>
-            <div>
+            <div className="flex flex-col gap-7">
               {productsInCart.length > 0 &&
                 productsInCart.map((p) => {
                   return (
@@ -53,6 +53,7 @@ const CartViewPage = () => {
                       price={p?.price?.toLocaleString("en-US")}
                       rating={p?.rating}
                       reviewsCount={p?.reviews.length}
+                      availabilityStatus={p?.availabilityStatus}
                     />
                   );
                 })}
