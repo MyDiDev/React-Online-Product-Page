@@ -17,12 +17,12 @@ export const addToCart = (product) => {
     }
   }
 
-  cart.forEach((p) => {
+  for (const p of cart) {
     if (p?.id == product?.id) {
-      console.log("Product already added");
-    };
-  });
-      
+      return true;
+    }
+  }
+
   cart.push(product);
   localStorage.setItem("cart_products", JSON.stringify(cart));
   return true;
